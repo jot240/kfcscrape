@@ -69,9 +69,7 @@ def read_single_address(soup):
     single_address['lat'] = latitude
     single_address['lon'] = longitude
     single_address['misc_notes'] = misc_notes
-    #single_address['hours'] = hour_string
     flattened = flatten_json(json.loads(hour_string))
-   
     single_address['phone_number'] = re.sub("[^0-9]", "",phone_number)
     return {**single_address, **flattened}
 
@@ -91,8 +89,7 @@ def flatten_json(times):
             closing_key = day + '_close'
             closing_value = time['intervals'][0]['end']
             out[opening_key] = opening_value
-            out[closing_key] = closing_value
-          
+            out[closing_key] = closing_value   
     return out
 
 
@@ -107,12 +104,7 @@ def get_addresses(city_urls):
             addresses.append(read_single_address(soup))
         else:
            addresses = addresses + read_address_list(city_url,locations)
-    return addresses
-        
-            
-
-    
-
+    return addresses 
 
 def pull_kfc():
     state_urls = get_state_urls()
@@ -121,17 +113,9 @@ def pull_kfc():
     address_frame = pd.DataFrame(address_list)
     address_frame.to_csv('kfcdata2.csv')
 
-    
-
-    
-
                 
       
 if __name__ == "__main__":
     pull_kfc()
 
        
-
-
-if __name__ == "__main__":
-    pull_kfc()
